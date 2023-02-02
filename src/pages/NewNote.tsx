@@ -1,6 +1,6 @@
 import React from 'react'
 import NoteForm from '../components/NoteForm'
-import { NoteFormProps, NewNoteFormProps } from '../types/propsTypes'
+import { NewNoteFormProps } from '../types/propsTypes'
 import "./newNote.css"
 
 const NewNote: React.FC<NewNoteFormProps> = ({ onSubmit, onAddTag, availableTags }) => {

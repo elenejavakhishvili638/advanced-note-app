@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router'
 import NewNote from './pages/NewNote'
 import { Tag, RawNote, NoteData } from './types/noteTypes'
 import { useLocalStorage } from './hooks/useLocalStorageHook'
+import NoteList from './pages/NoteList';
 
 const App: React.FC = () => {
 
@@ -30,7 +31,7 @@ const App: React.FC = () => {
   return (
     <Container className='my-4'>
       <Routes>
-        <Route path="/" element={"/"} />
+        <Route path="/" element={<NoteList availableTags={tags} />} />
         <Route path="/new-note" element={<NewNote onSubmit={createNote} onAddTag={addTag} availableTags={tags} />} />
         <Route path=":id">
           <Route index element={"Note"} />
