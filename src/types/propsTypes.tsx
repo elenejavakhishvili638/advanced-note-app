@@ -1,4 +1,4 @@
-import { NoteData, Tag } from "./noteTypes"
+import { NoteData, Tag, Note, SimplifiedNote } from "./noteTypes"
 
 export type NoteFormProps = {
     onSubmit: (data: NoteData) => void
@@ -14,4 +14,11 @@ export type NewNoteFormProps = {
 
 export type NoteListProps = {
     availableTags: Tag[]
+    notes: SimplifiedNote[]
+}
+
+export type NoteCardProps = {
+    id: string
+    title: string
+    tags: Tag[]
 }

@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Link } from "react-router-dom"
 import ReactSelect from "react-select/creatable"
 import { Row, Col, Stack, Button, Form } from "react-bootstrap"
 import "./noteList.css"
 import { Tag } from '../types/noteTypes'
 import { NoteListProps } from '../types/propsTypes'
+import NoteCard from '../components/NoteCard'
 
-const NoteList: React.FC<NoteListProps> = ({ availableTags }) => {
+const NoteList: React.FC<NoteListProps> = ({ availableTags, notes }) => {
 
     const [tags, setTags] = useState<Tag[]>([])
+    const [title, setTitle] = useState("")
+
+    const filteredNotes = useMemo(() => {
+        return notes.filter(note => {
+            return (title === "" || note.title.toLowerCase().includes(title.toLowerCase())) && (tags.length === 0 || tags.every(tag => note.tags.some(noteTag => noteTag.id === tag.id)))
+        })
+    }, [title, tags, notes])
 
     return (
         <>
@@ -32,7 +40,8 @@ const NoteList: React.FC<NoteListProps> = ({ availableTags }) => {
             <Form className='row'>
                 <Form.Group className='child mb-3' controlId="title">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" required placeholder="Please enter the title" />
+                    <Form.Control type="text" required placeholder="Please enter the title" value={title} onChange={(event) => setTitle(event.target.value)
+                    } />
                 </Form.Group>
                 <Form.Group className='child mb-3' controlId="Tags">
                     <Form.Label>Tags</Form.Label>
@@ -53,6 +62,13 @@ const NoteList: React.FC<NoteListProps> = ({ availableTags }) => {
                     />
                 </Form.Group>
             </Form>
+            <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
+                {filteredNotes.map(note => (
+                    <Col key={note.id}>
+                        <NoteCard id={note.id} title={note.title} tags={note.tags} />
+                    </Col>
+                ))}
+            </Row>
         </>
     )
 }

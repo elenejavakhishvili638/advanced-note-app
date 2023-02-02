@@ -31,7 +31,7 @@ const App: React.FC = () => {
   return (
     <Container className='my-4'>
       <Routes>
-        <Route path="/" element={<NoteList availableTags={tags} />} />
+        <Route path="/" element={<NoteList notes={notesWithTags} availableTags={tags} />} />
         <Route path="/new-note" element={<NewNote onSubmit={createNote} onAddTag={addTag} availableTags={tags} />} />
         <Route path=":id">
           <Route index element={"Note"} />
