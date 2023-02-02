@@ -1,0 +1,18 @@
+@media (min-width: 768px) {
+  .child {
+    width: 50%;
+  }
+
+  .button-container {
+    justify-content: end;
+  }
+}
+
+@media (max-width: 767px) {
+  .button-container {
+    justify-content: space-between;
+  }
+  .child {
+    margin-bottom: 1rem;
+  }
+}
