@@ -23,11 +23,15 @@ const App: React.FC = () => {
     })
   }
 
+  const addTag = (tag: Tag) => {
+    setTags((prevtags) => [...prevtags, tag])
+  }
+
   return (
     <Container className='my-4'>
       <Routes>
         <Route path="/" element={"/"} />
-        <Route path="/new-note" element={<NewNote />} />
+        <Route path="/new-note" element={<NewNote onSubmit={createNote} onAddTag={addTag} availableTags={tags} />} />
         <Route path=":id">
           <Route index element={"Note"} />
           <Route path="edit-note" element={"Edit"} />
