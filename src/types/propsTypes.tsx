@@ -15,6 +15,8 @@ export type NewNoteFormProps = {
 export type NoteListProps = {
     availableTags: Tag[]
     notes: SimplifiedNote[]
+    updateTag: (id: string, label: string) => void
+    deleteTag: (id: string) => void
 }
 
 export type NoteCardProps = {
@@ -37,4 +39,12 @@ export type EditNoteFormProps = {
 
 export type NoteProps = {
     onDelete: (id: string) => void
+}
+
+export type editTagsModalProps = {
+    availableTags: Tag[]
+    show: boolean
+    handleClose: () => void
+    updateTag: (id: string, label: string) => void
+    deleteTag: (id: string) => void
 }

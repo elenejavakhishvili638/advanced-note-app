@@ -6,11 +6,13 @@ import "./noteList.css"
 import { Tag } from '../types/noteTypes'
 import { NoteListProps } from '../types/propsTypes'
 import NoteCard from '../components/NoteCard'
+import EditTagsModal from '../components/EditTagsModal'
 
-const NoteList: React.FC<NoteListProps> = ({ availableTags, notes }) => {
+const NoteList: React.FC<NoteListProps> = ({ availableTags, notes, updateTag, deleteTag }) => {
 
     const [tags, setTags] = useState<Tag[]>([])
     const [title, setTitle] = useState("")
+    const [modalOpen, setModalOpen] = useState(false)
 
     const filteredNotes = useMemo(() => {
         return notes.filter(note => {
@@ -31,7 +33,7 @@ const NoteList: React.FC<NoteListProps> = ({ availableTags, notes }) => {
                                 Create
                             </Button>
                         </Link>
-                        <Button variant='outline-secondary'>
+                        <Button onClick={() => setModalOpen(true)} variant='outline-secondary'>
                             Edit Tags
                         </Button>
                     </Stack>
@@ -69,6 +71,7 @@ const NoteList: React.FC<NoteListProps> = ({ availableTags, notes }) => {
                     </Col>
                 ))}
             </Row>
+            <EditTagsModal updateTag={updateTag} deleteTag={deleteTag} availableTags={availableTags} show={modalOpen} handleClose={() => setModalOpen(false)} />
         </>
     )
 }
