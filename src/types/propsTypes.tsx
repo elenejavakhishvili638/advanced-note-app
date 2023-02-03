@@ -22,3 +22,7 @@ export type NoteCardProps = {
     title: string
     tags: Tag[]
 }
+
+export type NoteLayoutProps = {
+    notes: Note[]
+}
