@@ -31,4 +31,10 @@ export type EditNoteFormProps = {
     onSubmit: (id: string, { tags, ...data }: NoteData) => void
     onAddTag: (tag: Tag) => void
     availableTags: Tag[]
+    // onDelete: (id: string) => void
+}
+
+
+export type NoteProps = {
+    onDelete: (id: string) => void
 }
