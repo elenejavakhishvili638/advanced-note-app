@@ -4,7 +4,7 @@ export type NoteFormProps = {
     onSubmit: (data: NoteData) => void
     onAddTag: (tag: Tag) => void
     availableTags: Tag[]
-}
+} & Partial<NoteData>
 
 export type NewNoteFormProps = {
     onSubmit: (data: NoteData) => void
@@ -25,4 +25,10 @@ export type NoteCardProps = {
 
 export type NoteLayoutProps = {
     notes: Note[]
+}
+
+export type EditNoteFormProps = {
+    onSubmit: (id: string, { tags, ...data }: NoteData) => void
+    onAddTag: (tag: Tag) => void
+    availableTags: Tag[]
 }

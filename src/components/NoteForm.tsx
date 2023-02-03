@@ -7,11 +7,11 @@ import CreatableReactSelect from "react-select/creatable"
 import { NoteFormProps } from '../types/propsTypes'
 import { Tag } from '../types/noteTypes'
 
-const NoteForm: React.FC<NoteFormProps> = ({ onSubmit, onAddTag, availableTags }) => {
+const NoteForm: React.FC<NoteFormProps> = ({ onSubmit, onAddTag, availableTags, title = "", markdown = "", tags = [] }) => {
 
     // const [title, setTitle] = useState<HTMLInputElement>()
     // const [body, setBody] = useState<HTMLTextAreaElement>()
-    const [tags, setTags] = useState<Tag[]>([])
+    const [selectedTags, setSelectedTags] = useState<Tag[]>(tags)
     const titleRef = useRef<HTMLInputElement>(null)
     const bodyRef = useRef<HTMLTextAreaElement>(null)
     const navigate = useNavigate()
@@ -22,7 +22,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onSubmit, onAddTag, availableTags }
         onSubmit({
             title: titleRef.current!.value,
             markdown: bodyRef.current!.value,
-            tags: tags
+            tags: selectedTags
         })
         navigate("..")
     }
@@ -31,7 +31,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onSubmit, onAddTag, availableTags }
         <Form className="row" onSubmit={handleSubmit}>
             <Form.Group className='child mb-3' controlId="title">
                 <Form.Label>Title</Form.Label>
-                <Form.Control ref={titleRef} type="text" required placeholder="Please enter the title" />
+                <Form.Control ref={titleRef} type="text" required defaultValue={title} placeholder="Please enter the title" />
             </Form.Group>
             <Form.Group className='child mb-3' controlId="Tags">
                 <Form.Label>Tags</Form.Label>
@@ -40,17 +40,17 @@ const NoteForm: React.FC<NoteFormProps> = ({ onSubmit, onAddTag, availableTags }
                         console.log("onCreate")
                         const newTag = { id: uuidv4(), label }
                         onAddTag(newTag)
-                        setTags((prevTags) => [...prevTags, newTag])
+                        setSelectedTags((prevTags) => [...prevTags, newTag])
                     }}
                     options={availableTags.map((tag) => {
                         return { label: tag.label, value: tag.id }
                     })}
-                    value={tags.map(tag => {
+                    value={selectedTags.map(tag => {
                         return { label: tag.label, value: tag.id }
                     })}
                     onChange={selectedTags => {
                         console.log("onChange")
-                        setTags(selectedTags.map(selectedTag => {
+                        setSelectedTags(selectedTags.map(selectedTag => {
                             return { label: selectedTag.label, id: selectedTag.value }
                         }))
                     }}
@@ -59,7 +59,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onSubmit, onAddTag, availableTags }
             </Form.Group>
             <Form.Group controlId="markdown" className='mb-3'>
                 <Form.Label>Body</Form.Label>
-                <Form.Control ref={bodyRef} required as="textarea" rows={15}></Form.Control>
+                <Form.Control ref={bodyRef} required as="textarea" defaultValue={markdown} rows={15}></Form.Control>
             </Form.Group>
             <Stack direction='horizontal' gap={2} className="button-container">
                 <Button type="submit" variant='success'>Save</Button>

@@ -26,7 +26,7 @@ const Note = () => {
                 </Col>
                 <Col xs="auto">
                     <Stack gap={2} direction="horizontal">
-                        <Link to={`/${id}/edit`}>
+                        <Link to={`/${id}/edit-note`}>
                             <Button variant='warning'>
                                 Edit
                             </Button>

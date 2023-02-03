@@ -8,6 +8,7 @@ import { useLocalStorage } from './hooks/useLocalStorageHook'
 import NoteList from './pages/NoteList';
 import NoteLayout from './pages/NoteLayout';
 import Note from './components/Note';
+import EditNote from './components/EditNote';
 
 const App: React.FC = () => {
 
@@ -30,6 +31,18 @@ const App: React.FC = () => {
     setTags((prevtags) => [...prevtags, tag])
   }
 
+  const updateNote = (id: string, { tags, ...data }: NoteData) => {
+    setNotes(prevNotes => {
+      return prevNotes.map((note) => {
+        if (note.id === id) {
+          return { ...note, ...data, tagIds: tags.map((tag) => tag.id) }
+        } else {
+          return note
+        }
+      })
+    })
+  }
+
   return (
     <Container className='my-4'>
       <Routes>
@@ -37,7 +50,7 @@ const App: React.FC = () => {
         <Route path="/new-note" element={<NewNote onSubmit={createNote} onAddTag={addTag} availableTags={tags} />} />
         <Route path=":id" element={<NoteLayout notes={notesWithTags} />}>
           <Route index element={<Note />} />
-          <Route path="edit-note" element={"Edit"} />
+          <Route path="edit-note" element={<EditNote onSubmit={updateNote} onAddTag={addTag} availableTags={tags} />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
